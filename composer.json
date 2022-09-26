@@ -1,0 +1,19 @@
+{
+  "name": "zarinpal/zarinpal-php-sdk",
+  "description": "Zarinpal Php Sdk",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Zarinpal\\ZarinpalPhpSdk\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Masoud Amini",
+      "email": "m.amini@zarinpal.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {}
+}
