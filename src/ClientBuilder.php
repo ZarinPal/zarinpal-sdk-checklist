@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ZrinPal\Sdk;
+namespace ZarinPal\Sdk;
 
 use Http\Client\Common\HttpMethodsClient;
 use Http\Client\Common\HttpMethodsClientInterface;

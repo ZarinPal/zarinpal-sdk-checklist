@@ -3,10 +3,10 @@
 
 declare(strict_types=1);
 
-namespace ZrinPal\Sdk\Endpoint;
+namespace ZarinPal\Sdk\Endpoint;
 
-use ZrinPal\Sdk\HttpClient\Message\ResponseMediator;
-use ZrinPal\Sdk\ZarinPal;
+use ZarinPal\Sdk\HttpClient\Message\ResponseMediator;
+use ZarinPal\Sdk\ZarinPal;
 
 final class Todos
 {

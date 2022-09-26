@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ZrinPal\Sdk\HttpClient\Message;
+namespace ZarinPal\Sdk\HttpClient\Message;
 
 use Psr\Http\Message\ResponseInterface;
 

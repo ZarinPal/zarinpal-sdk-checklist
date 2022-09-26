@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace ZrinPal\Sdk;
+namespace ZarinPal\Sdk;
 
-use ZrinPal\Sdk\Endpoint\Todos;
+use ZarinPal\Sdk\Endpoint\Todos;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
