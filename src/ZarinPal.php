@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace ZarinPal\Sdk;
 
-use ZarinPal\Sdk\Endpoint\Todos;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Discovery\Psr17FactoryDiscovery;
 use Psr\Http\Message\UriFactoryInterface;
+use ZarinPal\Sdk\Endpoint\PaymentGateway\PaymentGateway;
 
 final class ZarinPal
 {
@@ -21,7 +21,7 @@ final class ZarinPal
         $uriFactory = $uriFactory ?: Psr17FactoryDiscovery::findUriFactory();
 
         $this->clientBuilder->addPlugin(
-            new BaseUriPlugin($uriFactory->createUri('https://jsonplaceholder.typicode.com'))
+            new BaseUriPlugin($uriFactory->createUri('https://api.zarinpal.com/'))
         );
         $this->clientBuilder->addPlugin(
             new HeaderDefaultsPlugin(
@@ -34,9 +34,9 @@ final class ZarinPal
         );
     }
 
-    public function todos(): Todos
+    public function paymentGateway(): PaymentGateway
     {
-        return new Endpoint\Todos($this);
+        return new PaymentGateway($this);
     }
 
     public function getHttpClient(): HttpMethodsClientInterface
