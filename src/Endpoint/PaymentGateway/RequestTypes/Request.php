@@ -9,12 +9,12 @@ class Request
 {
     use Fillable;
 
-    public string $merchantId;
+    public ?string $merchantId = null;
     public int $amount;
     public string $description;
     public string $callback_url;
-    public string $mobile;
-    public string $email;
+    public ?string $mobile = null;
+    public ?string $email = null;
 
     final public function toString(): string
     {
