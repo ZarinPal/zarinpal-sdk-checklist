@@ -6,6 +6,7 @@ declare(strict_types=1);
 namespace ZarinPal\Sdk\Endpoint\PaymentGateway;
 
 use Exception;
+use JsonException;
 use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\Request;
 use ZarinPal\Sdk\HttpClient\Exception\PaymentGatewayException;
 use ZarinPal\Sdk\HttpClient\Exception\ResponseException;
@@ -21,18 +22,20 @@ final class PaymentGateway
         $this->sdk = $sdk;
     }
 
-    public function all(): array
-    {
-        return ResponseMediator::getContent($this->sdk->getHttpClient()->post('pg/v4/payment/request.json'));
-    }
-
 
     /**
+     * @param RequestTypes\Request $request
+     * @return Request
      * @throws PaymentGatewayException
      * @throws ResponseException
+     * @throws \Http\Client\Exception
+     * @throws JsonException
      */
     public function request(RequestTypes\Request $request): Request
     {
+        if ($request->merchantId === null) {
+            $request->merchantId = $this->sdk->getMerchantId();
+        }
         $response = $this->httpHandler('pg/v4/payment/request.json', $request->toString());
 
         return new Request($response['data']);
@@ -41,7 +44,7 @@ final class PaymentGateway
 
     /**
      * @throws PaymentGatewayException
-     * @throws ResponseException
+     * @throws ResponseException|\Http\Client\Exception
      */
     private function httpHandler(string $uri, string $body): array
     {
