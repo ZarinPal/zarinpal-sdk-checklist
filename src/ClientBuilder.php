@@ -22,6 +22,9 @@ final class ClientBuilder
 
     private StreamFactoryInterface $streamFactoryInterface;
 
+    /**
+     * @var  Plugin[] $plugins
+     */
     private array $plugins = [];
 
     public function __construct(
