@@ -4,6 +4,9 @@ namespace ZarinPal\Sdk\Endpoint;
 
 trait Fillable
 {
+    /**
+     * @param array<string, string> $inputs
+     */
     public function __construct(?array $inputs = null)
     {
         if ($inputs !== null){
@@ -11,12 +14,12 @@ trait Fillable
         }
     }
 
-    final public function __get(string $name)
+    final public function __get(string $name):string
     {
         return $this->{$name};
     }
 
-    final public function __set(string $name, $value): void
+    final public function __set(string $name,string $value): void
     {
         $this->{$name} = $value;
     }
@@ -26,6 +29,9 @@ trait Fillable
         return property_exists($this, $name);
     }
 
+    /**
+     * @param array<string, string> $inputs
+     */
     final public function fill(array $inputs): self
     {
         foreach ($inputs as $key => $input) {
