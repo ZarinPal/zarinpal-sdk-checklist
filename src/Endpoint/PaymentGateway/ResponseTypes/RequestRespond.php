@@ -1,4 +1,5 @@
 <?php
+
 namespace ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes;
 
 use ZarinPal\Sdk\Endpoint\Fillable;
