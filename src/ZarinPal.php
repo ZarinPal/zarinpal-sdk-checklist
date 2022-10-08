@@ -7,8 +7,6 @@ namespace ZarinPal\Sdk;
 use Http\Client\Common\HttpMethodsClientInterface;
 use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
-use Http\Discovery\Psr17FactoryDiscovery;
-use Psr\Http\Message\UriFactoryInterface;
 use ZarinPal\Sdk\Endpoint\PaymentGateway\PaymentGateway;
 
 final class ZarinPal
@@ -24,12 +22,17 @@ final class ZarinPal
         $this->clientBuilder->addPlugin(
             new HeaderDefaultsPlugin(
                 [
-                    'User-Agent' => sprintf('%sSdk/v.0.1 (php %s)', $this->getClassName(),PHP_VERSION),
+                    'User-Agent' => sprintf('%sSdk/v.0.1 (php %s)', $this->getClassName(), PHP_VERSION),
                     'Content-Type' => 'application/json',
                     'Accept' => 'application/json',
                 ]
             )
         );
+    }
+
+    private function getClassName(): string
+    {
+        return basename(str_replace('\\', '/', __CLASS__));
     }
 
     public function paymentGateway(): PaymentGateway
@@ -45,10 +48,5 @@ final class ZarinPal
     public function getHttpClient(): HttpMethodsClientInterface
     {
         return $this->clientBuilder->getHttpClient();
-    }
-
-    private function getClassName(): string
-    {
-        return basename(str_replace('\\', '/', __CLASS__));
     }
 }
