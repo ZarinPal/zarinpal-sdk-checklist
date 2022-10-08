@@ -28,10 +28,11 @@ final class ClientBuilder
     private array $plugins = [];
 
     public function __construct(
-        ClientInterface $httpClient = null,
+        ClientInterface         $httpClient = null,
         RequestFactoryInterface $requestFactoryInterface = null,
-        StreamFactoryInterface $streamFactoryInterface = null
-    ) {
+        StreamFactoryInterface  $streamFactoryInterface = null
+    )
+    {
         $this->httpClient = $httpClient ?: HttpClientDiscovery::find();
         $this->requestFactoryInterface = $requestFactoryInterface ?: Psr17FactoryDiscovery::findRequestFactory();
         $this->streamFactoryInterface = $streamFactoryInterface ?: Psr17FactoryDiscovery::findStreamFactory();
