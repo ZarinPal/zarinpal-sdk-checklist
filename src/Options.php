@@ -39,7 +39,7 @@ final class Options
         $resolver->setAllowedTypes('merchant_id', 'string');
     }
 
-    private function arrayGet(array $array, string $key,?string $default = null): ?string
+    private function arrayGet(array $array, string $key, ?string $default = null): ?string
     {
         if (array_key_exists($key, $array) && $array[$key] !== '') {
             return $array[$key];
