@@ -12,7 +12,6 @@ use ZarinPal\Sdk\Options;
 use ZarinPal\Sdk\ZarinPal;
 
 
-
 $clientBuilder = new ClientBuilder();
 $clientBuilder->addPlugin(new HeaderDefaultsPlugin([
     'Accept' => 'application/json',
@@ -43,8 +42,8 @@ $verify->authority = 'A00000000000000000000000000123456';
 $unverified = new UnverifiedRequest();
 
 
-    $response = $sdk->paymentGateway()->request($request);
-    $response2 = $sdk->paymentGateway()->verify($verify);
-    $response3 = $sdk->paymentGateway()->unverified($unverified);
+$response = $sdk->paymentGateway()->request($request);
+$response2 = $sdk->paymentGateway()->verify($verify);
+$response3 = $sdk->paymentGateway()->unverified($unverified);
 
-die(print_r($response) . print_r($response2). print_r($response3));
+die(print_r($response) . print_r($response2) . print_r($response3));
