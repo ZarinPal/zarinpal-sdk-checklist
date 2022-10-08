@@ -9,6 +9,7 @@ use Exception;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
 use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\RequestRespond;
+use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\UnverifiedRespond;
 use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\VerifyRespond;
 use ZarinPal\Sdk\HttpClient\Exception\PaymentGatewayException;
 use ZarinPal\Sdk\HttpClient\Exception\ResponseException;
@@ -16,8 +17,10 @@ use ZarinPal\Sdk\ZarinPal;
 
 final class PaymentGateway
 {
-    private const REQUEST_URI = 'pg/v4/payment/request.json';
-    private const VERIFY_URI = 'pg/v4/payment/verify.json';
+    private const BASE_URL = 'pg/v4/payment/';
+    private const REQUEST_URI = self::BASE_URL . 'request.json';
+    private const VERIFY_URI = self::BASE_URL . 'verify.json';
+    private const UNVERIFIED_URI = self::BASE_URL . 'unVerified.json';
     private ZarinPal $sdk;
 
     public function __construct(ZarinPal $sdk)
@@ -60,14 +63,12 @@ final class PaymentGateway
             $response = $this->sdk->getHttpClient()
                 ->post($uri, [], $body);
             $this->checkHttpError($response);
-
             $response = json_decode($response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
-
         } catch (Exception $e) {
             throw new ResponseException($e->getMessage(), -99, $e);
         }
 
-        return $this->checkPaymentGatwayError($response);
+        return $this->checkPaymentGatewayError($response);
     }
 
     /**
@@ -78,6 +79,17 @@ final class PaymentGateway
         if (!in_array($response->getStatusCode(), [200, 400])) {
             throw new ResponseException('Http Error', -99, null);
         }
+    }
+
+    /**
+     * @throws PaymentGatewayException
+     */
+    private function checkPaymentGatewayError($response)
+    {
+        if (!empty($response['errors']) || empty($response['data'])) {
+            throw new PaymentGatewayException($response['errors']);
+        }
+        return $response;
     }
 
     /**
@@ -96,11 +108,19 @@ final class PaymentGateway
         return new VerifyRespond($response['data']);
     }
 
-    private function checkPaymentGatwayError($response)
+    /**
+     * @param RequestTypes\UnverifiedRequest $request
+     * @return UnverifiedRespond
+     * @throws JsonException
+     * @throws PaymentGatewayException
+     * @throws ResponseException
+     * @throws \Http\Client\Exception
+     */
+    public function unverified(RequestTypes\UnverifiedRequest $request): UnverifiedRespond
     {
-        if (!empty($response['errors']) || empty($response['data'])) {
-            throw new PaymentGatewayException($response['errors']);
-        }
-        return $response;
+        $this->fillMerchantId($request);
+        $response = $this->httpHandler(self::UNVERIFIED_URI, $request->toString());
+
+        return new UnverifiedRespond($response['data']);
     }
 }
