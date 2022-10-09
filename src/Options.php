@@ -33,9 +33,9 @@ final class Options
             ]
         );
 
-        $resolver->setAllowedTypes('base_url', 'string');
         $resolver->setAllowedTypes('client_builder', ClientBuilder::class);
         $resolver->setAllowedTypes('uri_factory', UriFactoryInterface::class);
+        $resolver->setAllowedTypes('base_url', 'string');
         $resolver->setAllowedTypes('merchant_id', 'string');
     }
 
