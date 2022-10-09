@@ -32,7 +32,7 @@ $request->amount = 2000;
 //$request->merchantId = 'a738fc08-1e83-4928-bf90-08936ea6e1e2';
 $request->description = 'test';
 $request->callback_url = 'https://tehran.ir';
-$request->mobile = '09375065007';
+$request->mobile = '09370000000';
 $request->email = 'a@b.c';
 
 $verify = new VerifyRequest();
