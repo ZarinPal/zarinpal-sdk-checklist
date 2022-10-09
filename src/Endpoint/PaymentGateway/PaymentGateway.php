@@ -8,9 +8,9 @@ namespace ZarinPal\Sdk\Endpoint\PaymentGateway;
 use Exception;
 use JsonException;
 use Psr\Http\Message\ResponseInterface;
-use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\RequestRespond;
-use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\UnverifiedRespond;
-use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\VerifyRespond;
+use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\RequestResponse;
+use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\UnverifiedResponse;
+use ZarinPal\Sdk\Endpoint\PaymentGateway\ResponseTypes\VerifyResponse;
 use ZarinPal\Sdk\HttpClient\Exception\PaymentGatewayException;
 use ZarinPal\Sdk\HttpClient\Exception\ResponseException;
 use ZarinPal\Sdk\ZarinPal;
@@ -31,18 +31,18 @@ final class PaymentGateway
 
     /**
      * @param RequestTypes\RequestRequest $request
-     * @return RequestRespond
+     * @return RequestResponse
      * @throws JsonException
      * @throws PaymentGatewayException
      * @throws ResponseException
      * @throws \Http\Client\Exception
      */
-    public function request(RequestTypes\RequestRequest $request): RequestRespond
+    public function request(RequestTypes\RequestRequest $request): RequestResponse
     {
         $this->fillMerchantId($request);
         $response = $this->httpHandler(self::REQUEST_URI, $request->toString());
 
-        return new RequestRespond($response['data']);
+        return new RequestResponse($response['data']);
 
     }
 
@@ -94,33 +94,33 @@ final class PaymentGateway
 
     /**
      * @param RequestTypes\VerifyRequest $request
-     * @return VerifyRespond
+     * @return VerifyResponse
      * @throws JsonException
      * @throws PaymentGatewayException
      * @throws ResponseException
      * @throws \Http\Client\Exception
      */
-    public function verify(RequestTypes\VerifyRequest $request): VerifyRespond
+    public function verify(RequestTypes\VerifyRequest $request): VerifyResponse
     {
         $this->fillMerchantId($request);
         $response = $this->httpHandler(self::VERIFY_URI, $request->toString());
 
-        return new VerifyRespond($response['data']);
+        return new VerifyResponse($response['data']);
     }
 
     /**
      * @param RequestTypes\UnverifiedRequest $request
-     * @return UnverifiedRespond
+     * @return UnverifiedResponse
      * @throws JsonException
      * @throws PaymentGatewayException
      * @throws ResponseException
      * @throws \Http\Client\Exception
      */
-    public function unverified(RequestTypes\UnverifiedRequest $request): UnverifiedRespond
+    public function unverified(RequestTypes\UnverifiedRequest $request): UnverifiedResponse
     {
         $this->fillMerchantId($request);
         $response = $this->httpHandler(self::UNVERIFIED_URI, $request->toString());
 
-        return new UnverifiedRespond($response['data']);
+        return new UnverifiedResponse($response['data']);
     }
 }
